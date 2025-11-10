@@ -1,9 +1,11 @@
 package main
 
 import (
+	"context"
 	"log"
 
-	"transactions/internal/server"
+	"transactions/internal/database"
+	"transactions/internal/handler"
 	"transactions/pkg/config"
 )
 
@@ -26,7 +28,8 @@ func main() {
 	}
 
 	addr := ":" + config.Port
-	if err := server.Start(addr, dbPool); err != nil {
+	handler := &handler.Handler{}
+	if err := handler.Start(addr, dbPool); err != nil {
 		log.Fatalf("server failed: %v", err)
 	}
 }
