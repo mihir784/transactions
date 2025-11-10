@@ -2,9 +2,18 @@ package config
 
 import "os"
 
-func GetPort() string {
-	if p := os.Getenv("PORT"); p != "" {
-		return p
+type Config struct {
+	Port string
+	PostgresURL string
+}
+
+func LoadConfig() Config {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
 	}
-	return "8080"
+	return Config{
+		Port: port,
+		PostgresURL: os.Getenv("POSTGRES_URL"),
+	}
 }

@@ -1,15 +1,33 @@
 package handler
 
 import (
-	"encoding/json"
+	"fmt"
 	"net/http"
+	"time"
+
+	"github.com/mihir/transactions/internal/handler"
 )
 
-type statusResp struct {
-	Status string `json:"status"`
+type Handler struct {
+	dbPool *database.dbPool
 }
 
-func HandleRoot(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(statusResp{Status: "ok"})
+
+func (s *Handler) Start(addr string, dbPool *database.dbPool) error {
+	service := &service.Service{dbPool: dbPool}
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", service.HandleRoot)
+	mux.HandleFunc("/accounts", service.HandleAccounts)
+	mux.HandleFunc("/accounts/", service.HandleAccountByID)
+	mux.HandleFunc("/transactions", service.HandleTransactions)
+
+	s := &http.Server{
+		Addr:         addr,
+		Handler:      mux,
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
+	}
+
+	fmt.Println("listening on", addr)
+	return s.ListenAndServe()
 }
