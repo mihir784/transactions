@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-
-	"github.com/mihir/transactions/internal/handler"
 )
 
 type Handler struct {

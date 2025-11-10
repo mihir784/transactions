@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/mihir/transactions/internal/server"
-	"github.com/mihir/transactions/pkg/config"
+	"transactions/internal/server"
+	"transactions/pkg/config"
 )
 
 func main() {

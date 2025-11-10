@@ -1,4 +1,4 @@
-module transactions
+module github.com/mihir784/transactions
 
 go 1.24
 
