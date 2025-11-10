@@ -24,7 +24,7 @@ func Migrate(ctx context.Context, dbPool *pgxpool.Pool) error {
 			initial_source_balance NUMERIC(20, 2) NOT NULL,
 			initial_destination_balance NUMERIC(20, 2) NOT NULL,
 			amount NUMERIC(20, 2) NOT NULL CHECK (amount > 0),
-			created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+			created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 			CONSTRAINT fk_source_account FOREIGN KEY (source_account_id) REFERENCES accounts(id),
 			CONSTRAINT fk_destination_account FOREIGN KEY (destination_account_id) REFERENCES accounts(id)
 		);`,
